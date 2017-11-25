@@ -18,7 +18,7 @@ object Main {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val path = "res"
+        val path = "src\\main\\resources"
         val initPath = Paths.get(path, "init\\init.sim")
         val inPath = Paths.get(path, "input\\player.simin")
         val outPath = Paths.get(path, "output\\state.simout")
@@ -26,7 +26,6 @@ object Main {
         val sim = initSim(initPath.toString())
 
         val simString = runSim(sim, inPath.toString())
-
         try {
             val file = File(outPath.toString())
             val writer = PrintWriter(file.absolutePath, "UTF-8")

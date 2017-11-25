@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/genetic-bot.iml" filepath="$PROJECT_DIR$/genetic-bot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/genetic-bot.iml" filepath="$PROJECT_DIR$/.idea/modules/genetic-bot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/genetic-bot_main.iml" filepath="$PROJECT_DIR$/.idea/modules/genetic-bot_main.iml" group="genetic-bot" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/genetic-bot_test.iml" filepath="$PROJECT_DIR$/.idea/modules/genetic-bot_test.iml" group="genetic-bot" />
     </modules>
   </component>
 </project>
