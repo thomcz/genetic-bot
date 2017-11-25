@@ -3,7 +3,7 @@ package de.genetic.bot.simulation
 import java.awt.Point
 
 class Map (val width : Int, val height :Int) {
-    var player: Player? = null
+    lateinit var player: Player
     val zombies: ArrayList<Zombie> = ArrayList()
     val bombs: ArrayList<Bomb> = ArrayList()
 
@@ -26,7 +26,7 @@ class Map (val width : Int, val height :Int) {
     }
 
     fun isInMap(position : Point) : Boolean {
-        return (position.x >= 0 && position.x < width && position.y >= 0 && position.y < height);
+        return (position.x in 0..(width - 1) && position.y >= 0 && position.y < height)
     }
 
 

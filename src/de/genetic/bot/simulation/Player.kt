@@ -4,11 +4,11 @@ import java.awt.Point
 
 class Player(var position : Point){
 
-    val stepSize = 100
+    private val stepSize = 100
     var health = 100
     var isDead = false
 
-    fun move(newPosition : Point) {
+    fun move(position : Point) {
         val dx = position.x - this.position.x
         val dy = position.y - this.position.y
         val dist = this.position.distance(position)
@@ -16,16 +16,16 @@ class Player(var position : Point){
         if (moveFactor >= 1)
             this.position.location = position
         else {
-            val newPosition = Point((this.position.x + dx * moveFactor) as Int, (this.position.y + dy * moveFactor) as Int)
+            val newPosition = Point((this.position.x + dx * moveFactor).toInt(), (this.position.y + dy * moveFactor).toInt())
             this.position.location = newPosition
         }
     }
     fun damage(damage : Int) {
         if (health > 0) {
-            health-=damage
+            health -= damage
         }
         if (health <= 0) {
-            isDead = true;
+            isDead = true
         }
     }
 

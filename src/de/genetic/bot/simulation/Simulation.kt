@@ -3,10 +3,10 @@ package de.genetic.bot.simulation
 import java.awt.Point
 
 
-class Simulation(val width: Int, val height: Int) {
-    val map:Map = Map(width, height)
-    var placedBombs = 0
-    var killScore = 0
+class Simulation(width: Int, height: Int) {
+    private val map : Map = Map(width, height)
+    private var placedBombs = 0
+    private var killScore = 0
 
     fun addPlayer(point: Point) {
         map.addPlayer(Player(point))
@@ -19,58 +19,69 @@ class Simulation(val width: Int, val height: Int) {
     }
     fun update(placeBomb : Boolean) {
         if (placeBomb) {
-            map.addBomb(Bomb(map.player!!.position))
+            map.addBomb(Bomb(map.player.position))
             placedBombs++
         }
     }
 
-    fun update(position : Point) {
+    fun update(position : Point) : Boolean {
         updatePlayer(position)
-        update()
+        return update()
     }
 
-    private fun update() {
+    private fun update() : Boolean {
         if (!isGameOver()) {
             updateBomb()
             updateZombies()
+            return true
         }
+        return false
     }
     private fun updatePlayer(position: Point) {
         if (map.isInMap(position)) {
-            map.player!!.move(position)
+            map.player.move(position)
         }
     }
 
     private fun isGameOver() : Boolean {
-        return map.player!!.isDead || map.zombies.isEmpty()
+        return map.player.isDead || map.zombies.isEmpty()
     }
 
     private fun updateBomb() {
-        for (bomb in map.bombs) {
+        val iterator = map.bombs.iterator()
+        while (iterator.hasNext()) {
+            val bomb = iterator.next()
             if (bomb.isExploded) {
-                map.bombs.remove(bomb)
+               iterator.remove()
+            } else {
+                bomb.tick()
+                if (bomb.countdown <= 0) {
+                    bomb.explode(map.player, map.zombies)
+                }
             }
         }
     }
 
     private fun updateZombies() {
         var killedZombies = 0
-        for (zombie in map.zombies) {
+        val iterator = map.zombies.iterator()
+        while (iterator.hasNext()) {
+            val zombie = iterator.next()
             if (zombie.isDead) {
-                map.zombies.remove(zombie)
+                iterator.remove()
                 killedZombies++
             } else {
-                zombie.move(map.player!!.position)
-                if (zombie.position.equals(map.player!!.position)) {
-                    zombie.hit(map.player!!)
+                zombie.move(map.player.position)
+                if (zombie.position == map.player.position) {
+                    zombie.hit(map.player)
                 }
             }
         }
         killScore += killedZombies * (killedZombies * 100)
     }
 
-    fun getScore(): Int {
-        return map.player!!.health / 10 * (map.player!!.health * 10 - placedBombs * 20 + killScore)
+    private fun getScore(): Int {
+        return map.player.health / 10 * (map.player.health * 10 - placedBombs * 20 + killScore)
     }
 
     fun getSimulationState(): SimulationState {

@@ -1,40 +1,38 @@
 package de.genetic.bot.simulation
 
 import java.awt.Point
-import sun.audio.AudioPlayer.player
 
-
-
-class Bomb (val position : Point) {
+class Bomb(position: Point) {
+    val position : Point = position.clone() as Point
     var countdown = 10
-    val radius = 500
-    val damage = 50
+    private val radius = 500
+    private val damage = 50
     var isExploded = false
-    fun Tick() {
+
+    fun tick() {
         countdown--
         if (countdown <=0) {
             isExploded = true
         }
     }
 
-    fun explode(player: Player, zombies:Array<Zombie>) {
+    fun explode(player: Player, zombies:ArrayList<Zombie>) {
         isExploded = true
         if (inRadius(player.position)) {
             player.damage(damage)
         }
 
-        for (z in zombies) {
-            if (inRadius(z.position)) {
-                z.kill()
-            }
-        }
+        zombies
+                .filter { inRadius(it.position) }
+                .forEach { it.kill() }
     }
 
-    fun inRadius(position: Point) : Boolean {
+    private fun inRadius(position: Point) : Boolean {
         return (this.position.distance(position) < radius)
     }
 
     override fun toString(): String {
         return String.format("%d %d %d\n", position.x, position.y, countdown)
     }
+
 }

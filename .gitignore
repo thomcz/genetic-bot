@@ -1,6 +1,8 @@
 # Compiled class file
 *.class
 
+*.simout
+
 # Log file
 *.log
 

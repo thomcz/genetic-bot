@@ -3,11 +3,11 @@ package de.genetic.bot.simulation
 import java.awt.Point
 
 class Zombie (val position : Point) {
-    val stepSize = 50
-    val damage = 30
+    private val stepSize = 50
+    private val damage = 30
     var isDead = false
 
-    fun move(newPosition : Point) {
+    fun move(position : Point) {
         val dx = position.x - this.position.x
         val dy = position.y - this.position.y
         val dist = this.position.distance(position)
@@ -15,7 +15,7 @@ class Zombie (val position : Point) {
         if (moveFactor >= 1)
             this.position.location = position
         else {
-            val newPosition = Point((this.position.x + dx * moveFactor) as Int, (this.position.y + dy * moveFactor) as Int)
+            val newPosition = Point((this.position.x + dx * moveFactor).toInt(), (this.position.y + dy * moveFactor).toInt())
             this.position.location = newPosition
         }
     }

@@ -5,8 +5,8 @@ import java.util.Random
 
 
 
-class RandomBot(var x: Int, var y: Int, var seed: Int) {
-    var rand = Random(seed.toLong())
+class RandomBot(var x: Int, var y: Int, seed: Int) {
+    private var rand = Random(seed.toLong())
     var bomb = false
 
 
